@@ -1,13 +1,24 @@
+# -*- coding: utf-8 -*-
+
 from __future__ import division
 
 
 def parse_number(s):
     s = s.strip()
-    multipliers = dict(k=1e3, M=1e6, G=1e9)
+    if ' ' in s: # deal with '2000V (2kV)'
+        s = s[:s.index(' ')]
+    units = [u'F', u'V', u'VAC']
+    for unit in units:
+        if s.endswith(unit):
+            s = s[:s.index(unit)]
+            break
+
+    multipliers = {u'k': 1e3, u'M': 1e6, u'G': 1e9, u'µ': 1e-6, u'u': 1e-6, u'm': 1e-3, u'p': 1e-12, u'n': 1e-9}
     mult = 1
     while s[-1] in multipliers:
         mult *= multipliers[s[-1]]
         s = s[:-1]
+    if s == '-': return None
     return float(s) * mult
 
 def within_tolerance(desired, tolerance_percent, actual):
