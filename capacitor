@@ -36,7 +36,7 @@ options.append(('ColumnSort', 1000011)) # XXX does this change?
 options.extend(fp.produce_filter_options('Capacitance',
     lambda s: digikey.within_tolerance(desired, args.tolerance, digikey.parse_number(s))))
 options.extend(fp.produce_filter_options('Voltage - Rated',
-    lambda s: digikey.parse_number(s) > args.voltage))
+    lambda s: digikey.parse_number(s) >= args.voltage))
 options.extend(fp.produce_filter_options('Package / Case',
     lambda s: s.strip().startswith('0603 ')))
 
