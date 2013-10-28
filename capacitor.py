@@ -38,4 +38,9 @@ options.extend(fp.produce_filter_options('Voltage - Rated',
 options.extend(fp.produce_filter_options('Package / Case',
     lambda s: s.strip().startswith('0603 ')))
 
-print r.get_new_url(options=options)
+url = r.get_new_url(options=options)
+print url
+
+r2 = robot.Robot.start(url)
+rp = digikey.FilteringPage(r2)
+print rp.first_part_number

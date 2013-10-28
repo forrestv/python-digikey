@@ -13,7 +13,7 @@ def parse_number(s):
             s = s[:s.index(unit)]
             break
 
-    multipliers = {u'k': 1e3, u'M': 1e6, u'G': 1e9, u'µ': 1e-6, u'u': 1e-6, u'm': 1e-3, u'p': 1e-12, u'n': 1e-9}
+    multipliers = {u'k': 1e3, u'M': 1e6, u'G': 1e9, u'µ': 1e-6, u'u': 1e-6, u'm': 1e-3, u'p': 1e-12, u'n': 1e-9, u'K': 1e3}
     mult = 1
     while s[-1] in multipliers:
         mult *= multipliers[s[-1]]
@@ -29,13 +29,16 @@ class FilteringPage(object):
         form = r.html.find('form', dict(name='attform'))
         table = form.table
         params = [th.string for th in table.tr.findAll('th')]
-        print params
+        #print params
 
         selects = [td.select for td in table.tr.findNextSibling().findAll('td', recursive=False)]
         assert len(selects) == len(params)
         
         self.params = params
         self.selects = selects
+        
+        results = r.html.find('table', dict(id='productTable'))
+        self.first_part_number = results.tbody.tr.find('td', {'class': 'digikey-partnumber'}).a.string
 
     def produce_filter_options(self, name, func):
         i = self.params.index(name)
