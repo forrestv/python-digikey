@@ -17,6 +17,7 @@ def strip_right_F(s):
 parser.add_argument('capacitance', metavar='CAPACITANCE', type=str, help='capacitance')
 parser.add_argument('--tolerance', metavar='TOLERANCE', type=float, help='tolerance in percent (default: 10)', default=10)
 parser.add_argument('--voltage', metavar='MINIMUM_VOLTAGE', type=float, help='minimum voltage (default: 10)', default=10)
+parser.add_argument('--package', metavar='PACKAGE', type=str, help='package / case', default='0603')
 
 args = parser.parse_args()
 
@@ -38,7 +39,7 @@ options.extend(fp.produce_filter_options('Capacitance',
 options.extend(fp.produce_filter_options('Voltage - Rated',
     lambda s: digikey.parse_number(s) >= args.voltage))
 options.extend(fp.produce_filter_options('Package / Case',
-    lambda s: s.strip().startswith('0603 ')))
+    lambda s: s.strip().startswith(args.package)))
 
 url = r.get_new_url(options=options)
 print url
