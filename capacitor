@@ -39,7 +39,7 @@ options.extend(fp.produce_filter_options('Capacitance',
 options.extend(fp.produce_filter_options('Voltage - Rated',
     lambda s: digikey.parse_number(s) >= args.voltage))
 options.extend(fp.produce_filter_options('Package / Case',
-    lambda s: s.strip().startswith(args.package)))
+    lambda s: s.strip().startswith(args.package) or args.package == 'ANY'))
 
 url = r.get_new_url(options=options)
 print url

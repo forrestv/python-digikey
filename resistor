@@ -29,7 +29,7 @@ options.append(('ColumnSort', 1000011)) # XXX does this change?
 options.extend(fp.produce_filter_options('Resistance (Ohms)',
     lambda s: digikey.within_tolerance(digikey.parse_number(args.resistance), args.tolerance, digikey.parse_number(s))))
 options.extend(fp.produce_filter_options('Package / Case',
-    lambda s: s.strip().startswith(args.package)))
+    lambda s: s.strip().startswith(args.package) or args.package == 'ANY'))
 
 url = r.get_new_url(options=options)
 print url
