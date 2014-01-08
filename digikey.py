@@ -7,7 +7,7 @@ def parse_number(s):
     s = s.strip()
     if ' ' in s: # deal with '2000V (2kV)'
         s = s[:s.index(' ')]
-    units = [u'F', u'V', u'VAC']
+    units = [u'F', u'V', u'VAC', u'H']
     for unit in units:
         if s.endswith(unit):
             s = s[:s.index(unit)]
