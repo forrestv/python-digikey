@@ -9,9 +9,9 @@ import digikey
 
 parser = argparse.ArgumentParser()
 
-parser.add_argument('inductance', metavar='INDUCTANCE', type=str, help='inductance')
+parser.add_argument('inductance', metavar='INDUCTANCE', type=str, help='inductance (example: 2.2u)')
 parser.add_argument('--tolerance', metavar='TOLERANCE', type=float, help='tolerance in percent (default: 1)', default=1)
-parser.add_argument('--package', metavar='PACKAGE', type=str, help='package / case', default='0603')
+parser.add_argument('--package', metavar='PACKAGE', type=str, help='package / case (default: 0603) (use ANY for any)', default='0603')
 
 args = parser.parse_args()
 
