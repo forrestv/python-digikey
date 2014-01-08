@@ -2,6 +2,8 @@
 
 from __future__ import division
 
+import BeautifulSoup
+
 
 def parse_number(s):
     s = s.strip()
@@ -20,6 +22,32 @@ def parse_number(s):
         s = s[:-1]
     if s == '-': return None
     return float(s) * mult
+
+def parse_tolerance(s):
+    def parse_percentage(s):
+        s = s.strip()
+        assert s[-1] == u'%'
+        return float(s[:-1])/100
+    
+    s = s.strip()
+    
+    print s,
+    
+    if s == u'Jumper':
+        print (1, 1)
+        return (1, 1)
+    elif s.startswith(u'\xb1'):
+        x = parse_percentage(s[1:])
+        print (1-x, 1+x)
+        return (1-x, 1+x)
+    elif u',' in s:
+        left, right = s.split(u',')
+        x = (1+parse_percentage(left), 1+parse_percentage(right))
+        print tuple(sorted(x))
+        return tuple(sorted(x))
+    else:
+        print repr(s)
+        return None
 
 def within_tolerance(desired, tolerance_percent, actual):
     return abs(actual - desired)/desired <= tolerance_percent/100
@@ -45,7 +73,7 @@ class FilteringPage(object):
         sel = self.selects[i]
         res = [(sel['name'], option['value'])
             for option in sel.findAll('option', recursive=False)
-            if func(option.string)]
+            if func(' '.join(x for x in option if not isinstance(x, BeautifulSoup.Comment)))]
         if not res:
             assert False, 'filter matched nothing'
         return res
