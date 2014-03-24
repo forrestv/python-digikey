@@ -4,7 +4,7 @@ from __future__ import division
 
 import argparse
 
-import robot
+from digikey import robot
 import digikey
 
 parser = argparse.ArgumentParser()
