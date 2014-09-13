@@ -21,6 +21,7 @@ def parse_number(s):
         mult *= multipliers[s[-1]]
         s = s[:-1]
     if s == '-': return None
+    if s == '*': return None
     return float(s) * mult
 
 def parse_tolerance(s):
